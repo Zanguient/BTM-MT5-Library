@@ -6,46 +6,43 @@
 #property copyright "Cesare - BacktestMarket"
 #property link      "https://www.backtestmarket.com"
 
-#include <Trade\Trade.mqh>
-CTrade mytrade;
-CSymbolInfo mysymbol;
-COrderInfo myorder;
+MqlTradeRequest request={0};
+MqlTradeResult  result={0};
 
-//--- declare and initialize the trade request and result of trade request
 
-void sendOrder(ENUM_ORDER_TYPE order_type,double volume, ulong deviation, double sl,double tp, ulong Magic_No, const string comment) {
+void ordini(ulong Expert_MN, ENUM_ORDER_TYPE order_type, string purpose, double volume, string comment) {
 
-   //mytrade.PositionOpen(symbol,order_type,volume,mysymbol.Ask(),sl,tp,comment);
+   if(purpose != "close") {
+      ZeroMemory(request);                                        //clear data
+      ZeroMemory(result);                                         // clear data from other orders (valid from 2° order)   
+      request.position  =  result.deal;                           // ticket ID
+      request.action    =  TRADE_ACTION_DEAL;                     // type of trade operation
+      request.symbol    =  Symbol();                              // symbol
+      request.volume    =  volume;                                // volume 
+      request.type      =  order_type;                            // order type
+      request.price     =  SymbolInfoDouble(Symbol(),SYMBOL_ASK); // current price
+      request.deviation = 10;                                     // accepted deviation from current price
+      request.type_filling = ORDER_FILLING_FOK;                   // filling type -> means all or nothing
+      request.comment = comment;                                  // comment for excel purposes
+      request.magic = Expert_MN;                                  // magic number
+   }
    
-   // define the input parameters and use the CSymbolInfo class
-   // object to get the current ASK/BID price
-   double Lots = volume;
-   // Stoploss must have been defined 
-   double SL = sl;
-   //Takeprofit must have been defined 
-   double TP = tp; 
-   // latest ask price using CSymbolInfo class object
-   double Oprice = mysymbol.Ask();
-   // open a buy trade
-   ulong Deviation = deviation;
+   else {
+      request.position  =  result.deal;                           // ticket ID
+      request.action    =  TRADE_ACTION_DEAL;                     // type of trade operation
+      request.symbol    =  Symbol();                              // symbol
+      request.volume    =  volume;                                // volume 
+      request.type      =  order_type;                            // order type
+      request.price     =  SymbolInfoDouble(Symbol(),SYMBOL_ASK); // current price
+      request.deviation = 10;                                     // accepted deviation from current price
+      request.type_filling = ORDER_FILLING_FOK;                   // filling type -> means all or nothing
+      request.comment = comment;                                  // comment for excel purposes
+      request.magic = Expert_MN;                                  // magic number
+   }
    
-   mytrade.SetDeviationInPoints(Deviation);
-   
-   mytrade.SetExpertMagicNumber(Magic_No);
-   
-   
-   mytrade.PositionOpen(_Symbol,order_type,Lots,Oprice,SL,TP,"Test Buy");
-
-}
-
-void closePosition() export {
-
-
-
-/*if (myposition.Select(_Symbol))
-{
- mytrade.PositionClose(_Symbol);  
-}*/
-
+   if(OrderSend(request,result))
+      printf("retcode=%u  deal=%I64u  order=%I64u",result.retcode,result.deal,result.order);
+   else
+      GetLastError();
 
 }
