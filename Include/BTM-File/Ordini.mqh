@@ -10,7 +10,7 @@
 MqlTradeRequest request={0};
 MqlTradeResult  result={0};
 
-void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, string comment, ulong Expert_MN) { // open new position
+void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, ulong Expert_MN) { // open new position
 
       ZeroMemory(request);                                                                                                      // clear data
       ZeroMemory(result);                                                                                                       // clear data from other orders (valid from 2° order)   
