@@ -10,7 +10,7 @@
 MqlTradeRequest request={0};
 MqlTradeResult  result={0};
 
-void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, string comment, ulong Expert_MN) {
+void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, string comment, ulong Expert_MN) { // open new position
 
       ZeroMemory(request);                                                                                                      // clear data
       ZeroMemory(result);                                                                                                       // clear data from other orders (valid from 2° order)   
@@ -34,7 +34,7 @@ void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volu
 
 }
 
-void closePosition(long Expert_MN) {
+void closePosition(long Expert_MN) {                                                                                            // close the last opened position for the current EA
 
       request.position = findTicketFromMN(Expert_MN);                                                                           // ticket ID  
       request.action = TRADE_ACTION_DEAL;                                                                                       // type of trade operation
