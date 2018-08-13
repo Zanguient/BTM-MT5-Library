@@ -10,7 +10,7 @@
 MqlTradeRequest request={0};
 MqlTradeResult  result={0};
 
-void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, ulong Expert_MN) { // open new position
+void openPositionAtMarket(string symbol, ENUM_ORDER_TYPE order_type, double volume, double sl, double tp, long Expert_MN) { // open new position
 
       ZeroMemory(request);                                                                                                      // clear data
       ZeroMemory(result);                                                                                                       // clear data from other orders (valid from 2° order)   
@@ -77,4 +77,21 @@ ulong findTicketFromMN (long Magic_Number) export {                             
      }
    return(0);
    
+}
+
+bool checkOpenPosition(long Expert_MN) export {                                                                                 // check if the position opened by the EA is still opened -> return true
+
+   int total = PositionsTotal();
+   long position_magic;
+   bool position_select;
+   
+   for(int i=total-1;i>=0;i--)
+     {
+      position_select = PositionSelect(_Symbol);
+      position_magic = PositionGetInteger(POSITION_MAGIC);
+      if(position_magic == Expert_MN)
+         return(true);
+     }
+   return(false);
+
 }
