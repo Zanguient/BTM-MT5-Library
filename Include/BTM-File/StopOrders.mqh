@@ -18,7 +18,7 @@ double SLATR(string symbol, ENUM_TIMEFRAMES timeframe, int period, double multip
    ArrayResize(LCp,period,1);
    ArrayResize(TR,period,1);
 
-   double sumTR;
+   double sumTR = 0;
 
    for(int i=1;i<period;i++)
      {
@@ -52,5 +52,21 @@ double SLATR(string symbol, ENUM_TIMEFRAMES timeframe, int period, double multip
       SL = NormalizeDouble(dAsk_Price + (multiplier * averageTrueRange),Digits());
 
    return(SL);
+
+}
+
+double TPAsSLMultiple(double prezzoIngresso, double SL, double multiplier) export {
+   
+   double tp;
+   if(SL < prezzoIngresso) {
+      tp = prezzoIngresso + MathAbs(prezzoIngresso - SL) * multiplier;
+      return(tp);
+   }
+   else {
+      tp = prezzoIngresso - MathAbs(prezzoIngresso - SL) * multiplier;
+      return(tp);
+   }
+   
+   return(0);
 
 }
