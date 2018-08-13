@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                              MoneyManagement.mqh |
-//|                                          Cesare - BacktestMarket |
+//|                                                   BacktestMarket |
 //|                                   https://www.backtestmarket.com |
 //+------------------------------------------------------------------+
 #property copyright "Cesare - BacktestMarket"

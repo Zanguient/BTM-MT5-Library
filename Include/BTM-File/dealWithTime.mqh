@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                 dealWithTime.mqh |
-//|                                          Cesare - BacktestMarket |
+//|                                                   BacktestMarket |
 //|                                   https://www.backtestmarket.com |
 //+------------------------------------------------------------------+
 #property copyright "Cesare - BacktestMarket"
@@ -21,7 +21,7 @@ bool dayOfWeek(int dayToCheck) export {
 
 bool WeekdayCheck(bool TDW1, bool TDW2, bool TDW3, bool TDW4, bool TDW5, bool TDW6, bool TDW7) export {
 /*
-// the input parameters TDW1 is a bool and if it is true means that I want to trade in Monday, etc
+ the input parameters TDW1 is a bool and if it is true means that I want to trade in Monday, etc
 input bool TDW_1 = 1; // Monday
 input bool TDW_2 = 1; // Tuesday
 input bool TDW_3 = 1; // Wednesday
